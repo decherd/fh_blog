@@ -7,7 +7,7 @@ import os
 from bs4 import BeautifulSoup
 
 
-app, rt = fast_app(hdrs=(Theme.zinc.headers(), HighlightJS(langs=["python", "bash", "yaml", "json"], light="atom-one-dark")), live=True)
+app, rt = fast_app(hdrs=(Theme.zinc.headers(mode='light'), HighlightJS(langs=["python", "bash", "yaml", "json"], light="atom-one-dark")), live=True)
 
 def load_posts():
     """Load all posts from the posts directory"""
