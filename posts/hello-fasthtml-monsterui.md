@@ -67,7 +67,7 @@ As I tell the high school students I am teaching a Python Programming class to, 
 
 ## This blog was built in a day with FastHTML and MonsterUI
 
-I'm just getting started myself with FastHTML and MonsterUI, but I've already built this blog with it. As of this publishing, it already has tag filtering and a responsive design. Each blog post is a markdown file that is rendered to HTML.
+I'm just getting started myself with FastHTML and MonsterUI, but I've already built this blog with it. As of this publishing, it already has tag filtering and a responsive design. Each blog post is a markdown file that is rendered to HTML. You can check out the source code on [GitHub](https://github.com/decherd/fh_blog).
 
 Check out some of these other blogs built with FastHTML:
 
