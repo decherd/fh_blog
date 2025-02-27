@@ -2,6 +2,7 @@
 test_posts/
 .DS_Store
 .sesskey
+favicons/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

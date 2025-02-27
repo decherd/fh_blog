@@ -8,7 +8,16 @@ from bs4 import BeautifulSoup
 from fh_posts.all import *
 
 
-app, rt = fast_app(hdrs=(Theme.zinc.headers(mode='light'), HighlightJS(langs=["python", "bash", "yaml", "json"], light="atom-one-dark")), live=True)
+app, rt = fast_app(
+    hdrs=(
+        Theme.zinc.headers(mode='light'), 
+        HighlightJS(langs=["python", "bash", "yaml", "json"], light="atom-one-dark"),
+        Favicon("static/favicon.ico", "static/favicon.ico")
+    ),
+    favicon=("DE", "#333333", "#ffffff"),  # Text, background color, text color
+    static_path="static",
+    live=True
+)
 
 
 def SocialLink(icon, text, url):
