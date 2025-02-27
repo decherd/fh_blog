@@ -39,7 +39,7 @@ In the same way that with FastHTML you can build a basic web application with ju
 This design principle of making it easy to start but also giving you the flexibility to extend and customize makes both FastHTML and MonsterUI a great choice for building web applications in Python.
 
 Here is an example card from the blog post linked above:
-```python:show:run
+```python:run:call
 def TeamCard(name, role, location="Remote"):
     icons = ("mail", "linkedin", "github")
     return Card(
@@ -51,7 +51,7 @@ def TeamCard(name, role, location="Remote"):
             DivHStacked(*(UkIconLink(icon, height=16) for icon in icons))),
             cls="max-w-sm mx-auto"
     )
-_result = TeamCard("James Wilson", "Senior Developer", "New York")
+TeamCard("James Wilson", "Senior Developer", "New York")
 ```
 ## Getting help from AI
 

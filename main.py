@@ -5,36 +5,11 @@ from datetime import datetime
 import yaml
 import os
 from bs4 import BeautifulSoup
+from fh_posts.all import *
 
 
 app, rt = fast_app(hdrs=(Theme.zinc.headers(mode='light'), HighlightJS(langs=["python", "bash", "yaml", "json"], light="atom-one-dark")), live=True)
 
-def load_posts():
-    """Load all posts from the posts directory"""
-    posts_dir = Path("posts")
-    posts = []
-    
-    for post_file in sorted(posts_dir.glob("*.md"), reverse=True):
-        with open(post_file, "r", encoding="utf-8") as f:
-            # Read frontmatter and content
-            content = f.read()
-            
-            # Split frontmatter from content
-            _, frontmatter, content = content.split("---", 2)
-            
-            # Parse frontmatter
-            metadata = yaml.safe_load(frontmatter)
-            
-            # Create post object
-            post = {
-                "slug": post_file.stem,
-                "content": content.strip(),
-                **metadata
-            }
-            posts.append(post)
-    
-    # Sort posts by date, newest first
-    return sorted(posts, key=lambda x: datetime.strptime(x["date"], "%B %d, %Y"), reverse=True)
 
 def SocialLink(icon, text, url):
     """Creates a social media link with icon"""
@@ -54,21 +29,21 @@ def BlogPostCard(post):
     return A(
         Card(
             DivVStacked(
-                H3(post["title"], cls=TextPresets.bold_lg),
-                P(post["date"], cls=TextPresets.muted_sm),
-                P(post["summary"], cls=TextPresets.muted_sm),
+                H3(post.title, cls=TextPresets.bold_lg),
+                P(post.date, cls=TextPresets.muted_sm),
+                P(post.summary, cls=TextPresets.muted_sm),
                 # Updated tags section with smaller, more compact styling
                 DivLAligned(
                     *[P(tag.replace("-", " "), 
                         cls=TextT.xs + TextT.muted + " bg-gray-50 px-1.5 rounded mr-1") 
-                      for tag in post["tags"]],
+                      for tag in post.tags],
                     cls="flex-wrap mt-2"
                 ),
                 cls="h-full"  # Make the inner content container full height; makes all the cards the same height
             ),
             cls="hover:shadow-lg transition-shadow duration-200 h-full"  # Make card full height
         ),
-        href=f"/post/{post['slug']}", 
+        href=f"/post/{post.slug}", 
     )
 
 def TagButton(tag, is_selected=False, cls=""):
@@ -197,15 +172,15 @@ def process_markdown_content(content: str):
 @rt("/")
 def get(tag: str = None):
     # Load posts on each request
-    posts = load_posts()
+    posts = load_posts('posts')
     
     # Filter posts if tag is provided
-    filtered_posts = [post for post in posts if not tag or tag in post["tags"]]
+    filtered_posts = [post for post in posts if not tag or tag in post.tags]
     
     # Get tag frequencies and sort by most common, then alphabetically for ties
     tag_freq = {}
     for post in posts:  # Use posts instead of blog_posts
-        for t in post["tags"]:
+        for t in post.tags:
             tag_freq[t] = tag_freq.get(t, 0) + 1
     
     # Get top 5 tags sorted by frequency (and alphabetically for ties)
@@ -250,10 +225,10 @@ def get(tag: str = None):
 @rt("/post/{post_slug}")
 def get(post_slug: str):
     # Load posts on each request
-    posts = load_posts()
+    posts = load_posts('posts')
     
     # Find the post or return 404
-    post = next((p for p in posts if p["slug"] == post_slug), None)  # Use posts instead of blog_posts
+    post = next((p for p in posts if p.slug == post_slug), None)  # Use posts instead of blog_posts
     if not post:
         return Title("404 - Aw, man!"), Container(
             H1("404 - Aw, man!", cls="text-4xl font-bold mt-8"),
@@ -262,24 +237,22 @@ def get(post_slug: str):
         )
     
     # Process the content and get HTML
-    processed_content = process_markdown_content(post["content"])
+    rendered_content = post.render(open_links_new_window=True)
     
-    return Title(f"{post['title']} - Drew Echerd's Blog"), Container(
+    return Title(f"{post.title} - Drew Echerd's Blog"), Container(
         DivVStacked(
             # Back link
             A("← Back to Home", 
               href="/", 
               cls="hover:text-gray-600 mb-8"),
             # Post header
-            H1(post["title"]),
-            P(post["date"], cls=TextPresets.muted_lg + " mt-2"),
+            H1(post.title),
+            P(post.date, cls=TextPresets.muted_lg + " mt-2"),
             Divider(cls="my-8"),
             cls="w-full"  # Ensure inner content respects container width
         ),
             # Post content with executed code blocks
-            Article(
-                NotStr(processed_content),
-            ),
+            Article(rendered_content),
         cls="max-w-4xl mx-auto px-4 py-8"  # Added w-full
     )
 
