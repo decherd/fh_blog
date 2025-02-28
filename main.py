@@ -12,9 +12,9 @@ app, rt = fast_app(
     hdrs=(
         Theme.zinc.headers(mode='light'), 
         HighlightJS(langs=["python", "bash", "yaml", "json"], light="atom-one-dark"),
-        Favicon("static/favicon.ico", "static/favicon.ico")
+        Link(rel="icon", type="image/x-icon", href="/images/favicon.ico"),
+        Link(rel="mask-icon", type="image/png", href="/images/apple-touch-icon.png")
     ),
-    favicon=("DE", "#333333", "#ffffff"),  # Text, background color, text color
     static_path="static",
     live=True
 )
