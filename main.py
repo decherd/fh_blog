@@ -14,22 +14,33 @@ app, rt = fast_app(
     live=True
 )
 
-def twitter_headers(post):
-    if post.metadata.get('image', None) and os.path.exists(f"static/images/{post.metadata.get('image')}"):
-        image = f"https://www.drewecherd.com/images/{post.metadata.get('image')}"
-    elif os.path.exists(f"static/images/{post.slug}.png"):
-        image = f"https://www.drewecherd.com/images/{post.slug}.png"
+def twitter_headers(post:Post = None):
+    if post:
+        if post.metadata.get('image', None) and os.path.exists(f"static/images/{post.metadata.get('image')}"):
+            image = f"https://www.drewecherd.com/images/{post.metadata.get('image')}"
+        elif os.path.exists(f"static/images/{post.slug}.png"):
+            image = f"https://www.drewecherd.com/images/{post.slug}.png"
+        else:
+            image = "https://www.drewecherd.com/images/twitter-card.jpg"
+        return (
+            Meta(name="twitter:card", content="summary"),
+            Meta(name="twitter:title", content=post.title),
+            Meta(
+                name="twitter:description",
+                content=post.summary if post.summary else "Blog by Drew Echerd",
+            ),
+            Meta(name="twitter:image", content=image)
+        )
     else:
-        image = "https://www.drewecherd.com/images/twitter-card.jpg"
-    return (
-        Meta(name="twitter:card", content="summary"),
-        Meta(name="twitter:title", content=post.title),
-        Meta(
-            name="twitter:description",
-            content=post.summary if post.summary else "Blog by Drew Echerd",
-        ),
-        Meta(name="twitter:image", content=image)
-    )
+        return (
+            Meta(name="twitter:card", content="summary"),
+            Meta(name="twitter:title", content="Drew Echerd's Blog"),
+            Meta(
+                name="twitter:description",
+                content="Sharing what I'm learning, teaching, and exploring in technology.",
+            ),
+            Meta(name="twitter:image", content="https://www.drewecherd.com/images/twitter-card.jpg")
+        )
 
 def SocialLink(icon, text, url):
     """Creates a social media link with icon"""
@@ -95,7 +106,10 @@ def get(tag: str = None):
     top_tags = sorted(tag_freq.items(), key=lambda x: (-x[1], x[0]))[:5]
     top_tags = [t[0] for t in top_tags]
     
-    return Title("Drew Echerd's Blog"), Container(
+    return (
+        *twitter_headers(),
+        Title("Drew Echerd's Blog"), 
+        Container(
         # Header section
         DivVStacked(
             A(H1("Drew Echerd's Blog", cls="mt-8"), href="/"),
@@ -128,6 +142,7 @@ def get(tag: str = None):
             )
         ),
         cls="max-w-4xl mx-auto px-4 py-8"
+        )
     )
 
 @rt("/post/{post_slug}")
