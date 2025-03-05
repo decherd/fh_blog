@@ -14,6 +14,22 @@ app, rt = fast_app(
     live=True
 )
 
+def twitter_headers(post):
+    if post.metadata.get('image', None) and os.path.exists(f"static/images/{post.metadata.get('image')}"):
+        image = f"https://www.drewecherd.com/images/{post.metadata.get('image')}"
+    elif os.path.exists(f"static/images/{post.slug}.png"):
+        image = f"https://www.drewecherd.com/images/{post.slug}.png"
+    else:
+        image = "https://www.drewecherd.com/images/twitter-card.jpg"
+    return (
+        Meta(name="twitter:card", content="summary"),
+        Meta(name="twitter:title", content=post.title),
+        Meta(
+            name="twitter:description",
+            content=post.summary if post.summary else "Blog by Drew Echerd",
+        ),
+        Meta(name="twitter:image", content=image)
+    )
 
 def SocialLink(icon, text, url):
     """Creates a social media link with icon"""
@@ -66,7 +82,7 @@ def get(tag: str = None):
     posts = load_posts('posts')
     
     # Filter posts if tag is provided
-    filtered_posts = [post for post in posts if not tag or tag in post.tags]
+    filtered_posts = [post for post in posts if (not tag or tag in post.tags) and not post.metadata.get('draft', False)]
     
     # Get tag frequencies and sort by most common, then alphabetically for ties
     tag_freq = {}
@@ -130,21 +146,25 @@ def get(post_slug: str):
     # Process the content and get HTML
     rendered_content = post.render(open_links_new_window=True)
     
-    return Title(f"{post.title} - Drew Echerd's Blog"), Container(
-        DivVStacked(
-            # Back link
-            A("← Back to Home", 
-              href="/", 
-              cls="hover:text-gray-600 mb-8"),
-            # Post header
-            H1(post.title),
-            P(post.date, cls=TextPresets.muted_lg + " mt-2"),
-            Divider(cls="my-8"),
-            cls="w-full"  # Ensure inner content respects container width
-        ),
-            # Post content with executed code blocks
-            Article(rendered_content),
-        cls="max-w-4xl mx-auto px-4 py-8"  # Added w-full
+    return (
+        *twitter_headers(post), 
+        Title(f"{post.title} - Drew Echerd's Blog"), 
+        Container(
+            DivVStacked(
+                # Back link
+                A("← Back to Home", 
+                href="/", 
+                cls="hover:text-gray-600 mb-8"),
+                # Post header
+                H1(post.title),
+                P(post.date, cls=TextPresets.muted_lg + " mt-2"),
+                Divider(cls="my-8"),
+                cls="w-full"  # Ensure inner content respects container width
+            ),
+                # Post content with executed code blocks
+                Article(rendered_content),
+            cls="max-w-4xl mx-auto px-4 py-8"  # Added w-full
+        )
     )
 
 serve()

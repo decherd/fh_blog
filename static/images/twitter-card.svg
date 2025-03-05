@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="1200"
+   height="1200"
+   viewBox="0 0 1200 1200"
+   version="1.1"
+   id="svg6"
+   sodipodi:docname="twitter-card.svg"
+   inkscape:version="1.3 (0e150ed, 2023-07-21)"
+   inkscape:export-filename="twitter-card.jpg"
+   inkscape:export-xdpi="32"
+   inkscape:export-ydpi="32"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview6"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="0.4813638"
+     inkscape:cx="745.79767"
+     inkscape:cy="581.68063"
+     inkscape:window-width="1712"
+     inkscape:window-height="987"
+     inkscape:window-x="-5"
+     inkscape:window-y="163"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="svg6" />
+  <!-- White background -->
+  <rect
+     width="1200"
+     height="1200"
+     fill="white"
+     id="rect1" />
+  <!-- Light gray diffusion/gradient background for depth -->
+  <defs
+     id="defs2">
+    <radialGradient
+       id="backgroundGradient"
+       cx="50%"
+       cy="50%"
+       r="70%"
+       fx="50%"
+       fy="50%">
+      <stop
+         offset="0%"
+         stop-color="#f7f7f7"
+         id="stop1" />
+      <stop
+         offset="100%"
+         stop-color="#e5e5e5"
+         id="stop2" />
+    </radialGradient>
+    <!-- Noise filter for subtle texture -->
+    <filter
+       id="noise"
+       x="0"
+       y="0"
+       width="1"
+       height="1">
+      <feTurbulence
+         type="fractalNoise"
+         baseFrequency="0.65"
+         numOctaves="3"
+         stitchTiles="stitch"
+         result="noise"
+         id="feTurbulence2" />
+      <feColorMatrix
+         type="matrix"
+         values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 0.03 0"
+         in="noise"
+         result="coloredNoise"
+         id="feColorMatrix2" />
+      <feComposite
+         operator="in"
+         in="coloredNoise"
+         in2="SourceGraphic"
+         result="monoNoise"
+         id="feComposite2" />
+    </filter>
+  </defs>
+  <!-- Background diffusion -->
+  <rect
+     width="1200"
+     height="1200"
+     fill="url(#backgroundGradient)"
+     filter="url(#noise)"
+     id="rect2" />
+  <!-- Subtle grid pattern for depth -->
+  <path
+     d="M0,0 L1200,0 L1200,1200 L0,1200 Z"
+     fill="none"
+     stroke="#f0f0f0"
+     stroke-width="1"
+     stroke-dasharray="2,20"
+     id="path2" />
+  <path
+     d="M0,0 L1200,1200 M1200,0 L0,1200"
+     fill="none"
+     stroke="#f0f0f0"
+     stroke-width="1"
+     opacity="0.3"
+     id="path3" />
+  <!-- Abstract decorative elements -->
+  <circle
+     cx="216.76111"
+     cy="951.93573"
+     r="180"
+     fill="#f5f5f5"
+     opacity="0.7"
+     id="circle3" />
+  <circle
+     cx="958.30975"
+     cy="314.54202"
+     r="200"
+     fill="#f5f5f5"
+     opacity="0.7"
+     id="circle4" />
+  <circle
+     cx="1201.2208"
+     cy="1131.8751"
+     r="200"
+     fill="#f5f5f5"
+     opacity="0.7"
+     id="circle4-0" />
+  <rect
+     x="71.057617"
+     cy="500"
+     width="250"
+     height="250"
+     rx="50"
+     fill="#f0f0f0"
+     opacity="0.5"
+     id="rect4"
+     y="174.5042" />
+  <rect
+     x="225.80734"
+     cy="500"
+     width="250"
+     height="250"
+     rx="50"
+     fill="#f0f0f0"
+     opacity="0.5"
+     id="rect4-5"
+     y="72.825348" />
+  <rect
+     x="895.5174"
+     cy="500"
+     width="250"
+     height="250"
+     rx="50"
+     fill="#f0f0f0"
+     opacity="0.5"
+     id="rect4-2"
+     y="813.83368" />
+  <rect
+     x="640.03784"
+     cy="700"
+     width="250"
+     height="250"
+     rx="50"
+     fill="#f0f0f0"
+     opacity="0.5"
+     id="rect5"
+     y="35.316326" />
+  <!-- Main title -->
+  <text
+     x="613.28229"
+     y="585.75568"
+     font-family="Arial, Helvetica, sans-serif"
+     font-size="142.353px"
+     font-weight="700"
+     text-anchor="middle"
+     fill="#000000"
+     id="text5"
+     style="stroke-width:1.92369">drewecherd.com</text>
+  <!-- Subtle tagline -->
+  <text
+     x="610.26044"
+     y="667.9458"
+     font-family="Arial, Helvetica, sans-serif"
+     font-size="63.8803px"
+     font-weight="300"
+     text-anchor="middle"
+     fill="#555555"
+     id="text6"
+     style="stroke-width:1.77445"><tspan
+       sodipodi:role="line"
+       id="tspan7"
+       x="610.26038"
+       y="667.9458"
+       style="stroke-width:1.77445">Thoughts on technology, programming,</tspan><tspan
+       sodipodi:role="line"
+       id="tspan8"
+       x="610.26044"
+       y="747.7962"
+       style="stroke-width:1.77445">and more</tspan></text>
+  <!-- Decorative line -->
+  <line
+     x1="389.61279"
+     y1="785.62787"
+     x2="820.77435"
+     y2="785.62787"
+     stroke="#e0e0e0"
+     stroke-width="4.15288"
+     id="line6" />
+</svg>
