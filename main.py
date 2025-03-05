@@ -86,9 +86,10 @@ def get(tag: str = None):
     
     # Get tag frequencies and sort by most common, then alphabetically for ties
     tag_freq = {}
-    for post in posts:  # Use posts instead of blog_posts
-        for t in post.tags:
-            tag_freq[t] = tag_freq.get(t, 0) + 1
+    for post in posts:
+        if not post.metadata.get('draft', False):
+            for t in post.tags:
+                tag_freq[t] = tag_freq.get(t, 0) + 1
     
     # Get top 5 tags sorted by frequency (and alphabetically for ties)
     top_tags = sorted(tag_freq.items(), key=lambda x: (-x[1], x[0]))[:5]
