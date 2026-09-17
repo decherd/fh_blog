@@ -11,7 +11,7 @@ app, rt = fast_app(
         Link(rel="mask-icon", type="image/png", href="/images/apple-touch-icon.png")
     ),
     static_path="static",
-    live=True
+    live=bool(os.getenv("BLOG_LIVE"))
 )
 
 def twitter_headers(post:Post = None):
