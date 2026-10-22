@@ -1,0 +1,26 @@
+# Dependabot proposes updates as pull requests; nothing merges by itself.
+# A release must be 3 days old first (the LiteLLM 1.107.0 lesson); security
+# updates skip the wait.
+version: 2
+updates:
+  - package-ecosystem: "docker"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    cooldown:
+      default-days: 3
+    ignore:
+      # Python runtime and Postgres major versions move by decision, not by bot.
+      - dependency-name: "python"
+        update-types: ["version-update:semver-major", "version-update:semver-minor"]
+      - dependency-name: "postgres"
+        update-types: ["version-update:semver-major"]
+  - package-ecosystem: "pip"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    cooldown:
+      default-days: 3
+    groups:
+      dependencies:
+        patterns: ["*"]
