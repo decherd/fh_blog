@@ -2,6 +2,11 @@
 # new post is a rebuild and the container keeps no state of its own.
 FROM python:3.12-slim@sha256:cb33f7f771ecec2ef1225cf39b159591a040391bd73e4c01f00fdfc4c47611d2
 
+# Debian security fixes newer than the pinned base image. The weekly rebuild
+# on the server (server/systemd/container-refresh) skips the build cache, so
+# this runs again each week.
+RUN apt-get update && apt-get -y upgrade && rm -rf /var/lib/apt/lists/*
+
 ENV PYTHONUNBUFFERED=1 PIP_NO_CACHE_DIR=1
 
 WORKDIR /app
